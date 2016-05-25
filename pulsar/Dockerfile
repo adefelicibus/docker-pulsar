@@ -25,11 +25,22 @@ RUN apt-get -qq update && \
 RUN mkdir /usr/share/pulsar; chmod 755 /usr/share/pulsar
 RUN virtualenv /usr/share/pulsar/venv
 
+# TODO
+# INSTALL GALAXY AND SET THE $GALAXY_HOME INSIDE THE CONTAINER
+# USE THE REQUERIMENTS.TXT FILE FROM TO INSTALL ON PULSAR ENV
+
+pip install --upgrade "https://wheels.galaxyproject.org/packages/pip-8.0.2+gx2-py2.py3-none-any.whl"
+pip install -r /mnt/galaxy/requirements.txt --index-url https://wheels.galaxyproject.org/simple 
+
 RUN . /usr/share/pulsar/venv/bin/activate; pip install --ignore-installed pyOpenSSL
 
 RUN . /usr/share/pulsar/venv/bin/activate; pip install --ignore-installed PasteDeploy
 
 RUN . /usr/share/pulsar/venv/bin/activate; pip install --ignore-installed paste
+
+RUN . /usr/share/pulsar/venv/bin/activate; pip install --ignore-installed numpy
+
+RUN . /usr/share/pulsar/venv/bin/activate; pip install --ignore-installed bx-python mako
 
 RUN . /usr/share/pulsar/venv/bin/activate; pip install pulsar-app
 
